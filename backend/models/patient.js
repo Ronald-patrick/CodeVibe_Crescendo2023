@@ -14,6 +14,7 @@ const patientSchema = new mongoose.Schema(
 		},
 		reports : [
 			{
+				reportBy : String,
 				date : {
 					type: Date,
 					default: Date.now,

@@ -6,7 +6,8 @@ const {Auth} = require('../middlewares/auth')
 const {
     register,
     login,
-    addPatient
+    addPatient,
+    addReport
 } = require("../services/hpService");
 
 // router.route("/upload").post(upload)
@@ -14,6 +15,7 @@ const {
 router.route("/register").post(register)
 router.route("/login").post(login)
 router.route("/add-patient").post(Auth,addPatient)
+router.route("/add-report").post(Auth,addReport)
 
 module.exports = router;
 
