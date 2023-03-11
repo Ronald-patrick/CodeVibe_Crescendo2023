@@ -8,6 +8,7 @@ import ReportList from "./components/ReportList";
 import PatientRegister from './pages/PatientRegister';
 import SearchPatientList from './pages/SearchPatientList';
 import SendRequest from './pages/SendRequest';
+import Dashboard from './pages/Dashboard';
 
 function App() {
   return (
@@ -21,6 +22,9 @@ function App() {
     <Route path='/patientRegister' element={<PatientRegister />} />
     <Route path = "/listPatients" element={<SearchPatientList/>} />
     <Route path = "/sendReq" element={<SendRequest/>} />
+    <Route path = "/Dashboard" element={<Dashboard/>} />
+  
+    
 
     </Routes>
   );
