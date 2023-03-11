@@ -1,6 +1,6 @@
-const { json } = require('express')
 const jwt = require('jsonwebtoken')
-const {HealthProvider} = require('../models/healthProvider')
+const { HealthProvider } = require('../models/healthProvider')
+const { Patient } = require('../models/patient')
 const bcrypt = require('bcryptjs')
 const { uploadFile } = require("../config/s3");
 
@@ -12,14 +12,14 @@ exports.register = async (req, res) => {
 			name: req.body.name,
 			email: req.body.email,
 			password: newPassword,
-            address : req.body.address,
-            phone_number : req.body.phone_number,
-            services : req.body.services
+			address: req.body.address,
+			phone_number: req.body.phone_number,
+			services: req.body.services
 		})
-		res.json({ status: 'ok' })
+		res.status(200).send({message : 'Registered Successfully'})
 	} catch (err) {
 		console.log(err.message)
-		res.json({ status: 'error', error: 'Duplicate email' })
+		res.status(500).send({ status: 'error', error: 'Duplicate email' })
 	}
 }
 
@@ -64,12 +64,29 @@ exports.login = async (req, res) => {
 			process.env.JWT_SECRET, { expiresIn: "24h" }
 		)
 
-		return res.json({ status: 'ok', user: token })
+		res.status(200).send({message : 'Registered Successfully',token})
 	} else {
-		return res.json({ status: 'error', user: false })
+		return res.status(500).send({ status: 'error' })
 	}
 }
 
 exports.addPatient = async (req, res) => {
-	
+	const user = req.user;
+	try {
+		const patient = await Patient.create({
+			name: req.body.name,
+			email: req.body.email,
+			address: req.body.address,
+			phone_number: req.body.phone_number,
+			access_list: [user.id],
+			requests_list:[],
+			reports:[]
+		})
+
+		res.status(200).send({message : 'Patient Added Successfully'})
+
+	} catch (err) {
+		console.log(err.message)
+		res.status(500).send({error : "Cannot add Patient"})
+	}
 }
