@@ -24,7 +24,7 @@ const SearchPatientList = () => {
                                         </p>
                                     </div>
                                     <input placeholder="Search Patient " type="search" class="border block pt-2 pr-0 pb-2 pl-10 w-full py-2
-                pl-10 rounded-lg focus:border-gray-600 sm:text-sm"/>
+                 rounded-lg focus:border-gray-600 sm:text-sm"/>
                                 </div>
                             </div>
                         </div>
