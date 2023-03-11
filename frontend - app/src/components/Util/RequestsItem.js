@@ -1,8 +1,14 @@
 import React from 'react';
 import {View, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { StripeProvider } from '@stripe/stripe-react-native';
 
 const RequestsItem = ({item}) => {
+
+  const handleIconClick = (type)=>{
+    console(type);
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.card}>
@@ -14,13 +20,14 @@ const RequestsItem = ({item}) => {
 
       <View style={styles.buttonsContainer}>
         <TouchableOpacity style={styles.button}>
-          <Icon name="close" size={24} color="white" style={styles.denyButton} />
+          <Icon name="close" size={24} color="white" style={styles.denyButton} onPress={()=>handleIconClick('deny')}/>
         </TouchableOpacity>
         <TouchableOpacity style={styles.button}>
           <Icon
             name="check"
             size={24}
             color="white"
+            onPress={()=>handleIconClick('allow')}
             style={styles.allowButton}
           />
         </TouchableOpacity>
