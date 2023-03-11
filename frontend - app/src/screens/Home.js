@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import HeaderTabs from '../components/Util/HeaderTabs'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Reports from '../components/Util/Reports';
+import RequestsScreen from '../components/Util/RequestsScreen';
 
 
 export default function Home() {
@@ -19,6 +20,7 @@ export default function Home() {
         {activeTab==="Reports"?<>
             <Reports/>
         </>:<>
+        <RequestsScreen/>
         </>}
     </SafeAreaView>
   )
