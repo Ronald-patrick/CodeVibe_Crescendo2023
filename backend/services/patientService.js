@@ -55,3 +55,17 @@ exports.otpVerification = async (req, res) => {
     }
 }
 
+exports.getReports = async (req, res) => {
+	const user = req.user;
+    try{
+        const currUser = await Patient.findOne({
+            "_id" : user.userId
+        })
+
+        return res.status(200).send({reports : currUser.reports})
+    }
+
+    catch(err){
+        return res.status(500).send("Something went wrong");
+    }
+}
