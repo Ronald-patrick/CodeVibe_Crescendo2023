@@ -13,9 +13,10 @@ const RequestsItem = ({item}) => {
     <View style={styles.container}>
       <View style={styles.card}>
         {/* your card content goes here */}
-        <Text>{item.PH1Name}</Text>
-        <Text>{item.PH2Name}</Text>
-        <Text>{item.PHPhone}</Text>
+        <Text style={{color:'#2735AD'}}>Has Requested to access your EHR</Text>
+        <Text>{item.name}</Text>
+        <Text>{item.address}</Text>
+        <Text>{item.phone_number}</Text>
       </View>
 
       <View style={styles.buttonsContainer}>
@@ -47,7 +48,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     borderRadius: 8,
     padding: 16,
-    width: '80%',
+    width: '90%',
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
