@@ -40,7 +40,7 @@ function ReportList() {
                     </tr>
                   </thead>
                   <tbody className='bg-white divide-y divide-primary  dark:divide-primary'>
-                    <tr className='hover:bg-primary '>
+                    <tr className='hover:bg-gray-100 '>
                       <td className='p-4 w-4'></td>
                       <td className='py-4 px-6 text-sm font-medium  whitespace-nowrap text-black'>
                         Meet
@@ -58,7 +58,7 @@ function ReportList() {
                         </a>
                       </td>
                     </tr>
-                    <tr className='hover:bg-primary '>
+                    <tr className='hover:bg-gray-100 '>
                       <td className='p-4 w-4'></td>
                       <td className='py-4 px-6 text-sm font-medium  whitespace-nowrap text-black'>
                         Ronald
@@ -76,7 +76,7 @@ function ReportList() {
                         </a>
                       </td>
                     </tr>
-                    <tr className='hover:bg-primary '>
+                    <tr className='hover:bg-gray-100 '>
                       <td className='p-4 w-4'></td>
                       <td className='py-4 px-6 text-sm font-medium whitespace-nowrap text-black'>
                         Raj
@@ -94,7 +94,7 @@ function ReportList() {
                         </a>
                       </td>
                     </tr>
-                    <tr className='hover:bg-primary '>
+                    <tr className='hover:bg-gray-100 '>
                       <td className='p-4 w-4'>
                         <div className='flex items-center'></div>
                       </td>
@@ -114,7 +114,7 @@ function ReportList() {
                         </a>
                       </td>
                     </tr>
-                    <tr className='hover:bg-primary '>
+                    <tr className='hover:bg-gray-100 '>
                       <td className='p-4 w-4'>
                         <div className='flex items-center'></div>
                       </td>
