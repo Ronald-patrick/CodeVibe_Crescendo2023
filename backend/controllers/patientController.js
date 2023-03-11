@@ -6,7 +6,8 @@ const {Auth} = require('../middlewares/auth')
 const {
     patientLogin,
     otpVerification,
-    getReports
+    getReports,
+    verifyRequest
 } = require("../services/patientService");
 
 // router.route("/upload").post(upload)
@@ -14,5 +15,6 @@ const {
 router.route("/login").post(patientLogin)
 router.route("/otpVerify").post(otpVerification)
 router.route("/get-reports").post(Auth,getReports)
+router.route("/verify-request").post(Auth,verifyRequest)
 
 module.exports = router;
