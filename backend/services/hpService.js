@@ -14,9 +14,10 @@ exports.register = async (req, res) => {
 			password: newPassword,
 			address: req.body.address,
 			phone_number: req.body.phone_number,
-			services: req.body.services
+			services: req.body.services,
+			patients_list: req.body.patients_list
 		})
-		res.status(200).send({message : 'Registered Successfully'})
+		res.status(200).send({ message: 'Registered Successfully' })
 	} catch (err) {
 		console.log(err.message)
 		res.status(500).send({ status: 'error', error: 'Duplicate email' })
@@ -64,7 +65,7 @@ exports.login = async (req, res) => {
 			process.env.JWT_SECRET, { expiresIn: "24h" }
 		)
 
-		res.status(200).send({message : 'Registered Successfully',token})
+		res.status(200).send({ message: 'Registered Successfully', token })
 	} else {
 		return res.status(500).send({ status: 'error' })
 	}
@@ -79,14 +80,54 @@ exports.addPatient = async (req, res) => {
 			address: req.body.address,
 			phone_number: req.body.phone_number,
 			access_list: [user.id],
-			requests_list:[],
-			reports:[]
+			requests_list: [],
+			reports: []
 		})
 
-		res.status(200).send({message : 'Patient Added Successfully'})
+		const getinsertedPatient = await Patient.findOne({
+			phone_number: req.body.phone_number
+		})
+
+		const rel = await HealthProvider.updateOne({ "_id": user.id }, { $push: { "patients_list": getinsertedPatient._id } });
+
+		res.status(200).send({ message: 'Patient Added Successfully' })
 
 	} catch (err) {
 		console.log(err.message)
-		res.status(500).send({error : "Cannot add Patient"})
+		res.status(500).send({ error: "Cannot add Patient" })
+	}
+}
+
+exports.addReport = async (req, res) => {
+	const user = req.user;
+	const pid = req.body.id;
+	try {
+		const report = {
+			reportBy : req.body.hpname,
+			xrays_data: req.body.xrayList,
+			symptoms: req.body.symptoms,
+			comments: req.body.comments
+		}
+
+		console.log(report);
+
+		try {
+			const rel = Patient.updateOne({ "_id": pid },
+			{ $push: { "reports": report } }).then((arr)=> console.log(arr)).catch(err => console.log(err))
+		}
+
+		catch(err){
+			console.log(err);
+		}
+
+
+
+
+		res.status(200).send({ message: "Report Added" })
+	}
+
+	catch (err) {
+		console.log(err.message)
+		res.status(500).send({ error: "Cannot add Patient" })
 	}
 }
