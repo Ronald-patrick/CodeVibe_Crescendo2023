@@ -1,8 +1,10 @@
+import {Link} from 'react-router-dom';
+
 
 const SearchPatientList = () => {
     return (
         <>
-            <div class="bg-white -lime-700 pt-12 pr-0 pb-12 pl-0 mt-0 mr-auto mb-0 ml-auto sm:py-16 lg:py-20">
+            <div class="bg-white  pt-0 pr-0 pb-0 pl-0 mt-0 mr-auto mb-0 ml-auto sm:py-16 lg:py-6">
                 <div class="pt-0 pr-4 pb-0 pl-4 mt-0 mr-auto mb-0 ml-auto max-w-7xl sm:px-6 lg:px-8">
                     <div class="pt-0 pr-4 pb-0 pl-4 mt-0 mr-auto mb-0 ml-auto max-w-4xl sm:px-6 lg:px-8">
                         <div class="pt-0 pr-4 pb-0 pl-4 mt-0 mr-auto mb-0 ml-auto sm:flex sm:items-center sm:justify-between">
@@ -26,7 +28,8 @@ const SearchPatientList = () => {
                                 </div>
                             </div>
                         </div>
-                        <div class="border-2 border-gray-300 shadow-xl mt-8 mr-0 mb-0 ml-0 pt-4 pr-10 pb-4 pl-10 flow-root rounded-lg sm:py-2">
+                    
+                        <div class="border-2 border-violet-300 shadow-xl mt-8 mr-0 mb-0 ml-0 pt-4 pr-10 pb-4 pl-10 flow-root rounded-lg sm:py-2">
                             <div class="pt--10 pr-0 pb-10 pl-0">
                                 <div class="pt-5 pr-0 pb-0 pl-0 mt-5 mr-0 mb-0 ml-0">
                                     <div class="sm:flex sm:items-center sm:justify-between sm:space-x-5">
@@ -43,13 +46,13 @@ const SearchPatientList = () => {
                                             </div>
                                         </div>
                                         <div class="mt-4 mr-0 mb-0 ml-0 pt-0 pr-0 pb-0 pl-14 flex items-center sm:space-x-6 sm:pl-0 sm:mt-0">
-                                            <a href="" class=" bg-gray-800 pt-2 pr-6 pb-2 pl-6 text-lg font-medium text-gray-100 transition-all
+                                            <Link to = '/patientProfile_1' class=" bg-gray-800 pt-2 pr-6 pb-2 pl-6 text-lg font-medium text-gray-100 transition-all
                     duration-200 hover:bg-gray-700 rounded-lg">View
                                                 {/* <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                                                     <path strokeLinecap="round" strokeLinejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
                                                     <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                                                 </svg> */}
-                                            </a>
+                                            </Link>
 
                                         </div>
                                     </div>
