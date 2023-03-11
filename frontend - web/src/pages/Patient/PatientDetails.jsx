@@ -1,21 +1,21 @@
 export default function PatientDetails(){
     return(
         <>
-         <div className="hidden sm:block" aria-hidden="true">
+         {/* <div className="hidden sm:block" aria-hidden="true">
                     <div className="py-5">
                         <div className="border-t border-gray-200" />
                     </div>
-                </div>
+                </div> */}
 
                 <div className="mt-10 sm:mt-0">
-                    <div className="md:grid md:grid-cols-3 md:gap-6">
-                        <div className="md:col-span-1">
+                        <h3 className="text-base font-semibold leading-6 text-gray-900">Personal Information</h3>
+                    <div className="md:grid md:grid-cols-0 md:gap-0">
+                        {/* <div className="md:col-span-1">
                             <div className="px-4 sm:px-0">
-                                <h3 className="text-base font-semibold leading-6 text-gray-900">Personal Information</h3>
                                 <p className="mt-1 text-sm text-gray-600">Use a permanent address where you can receive mail.</p>
                             </div>
-                        </div>
-                        <div className="mt-5 md:col-span-2 md:mt-0">
+                        </div> */}
+                        <div className="mt-5 md:col-span-2 md:mt-0 border-2 border-violet-200">
                             <form action="#" method="POST">
                                 <div className="overflow-hidden shadow sm:rounded-md">
                                     <div className="bg-white px-4 py-5 sm:p-6">
