@@ -131,7 +131,37 @@ def segment():
         return upload(i,fname)
         # ShowImage('Watershed segmented image',im1,'gray')
         
+@app.route('/edge-detection',methods=['post'])
+def edgeDetection():
 
+    if request.method == 'POST':
+        file = request.files['file']
+        fname =  'codeVibe'+str(random_with_N_digits(4))+'.jpg'
+        file.save(fname)
+        img = cv2.imread(fname)
+
+        # convert img to grayscale
+        gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+
+        # do morphology gradient
+        kernel = cv2.getStructuringElement(cv2.MORPH_RECT , (3,3))
+        morph = cv2.morphologyEx(gray, cv2.MORPH_GRADIENT, kernel)
+
+        # apply gain
+        morph = cv2.multiply(morph, 5)
+
+        fname2 =  'codeVibe'+str(random_with_N_digits(4))+'.jpg'
+        # file.save(fname)
+        # write results
+        image_bytes = cv2.imencode('.jpg', morph)[1].tobytes()
+        i = BytesIO(image_bytes)
+        cv2.imwrite(fname2, morph)
+        return upload(i,fname2)
+        # show lines
+        # cv2.imshow("morph", morph)
+
+
+        # cv2.waitKey(0)
 
 # @app.route('/upload',methods=['post'])
 def upload(img,filename):
