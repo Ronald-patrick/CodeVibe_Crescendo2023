@@ -7,9 +7,13 @@ import {
   StyleSheet,
   StatusBar,
   TouchableOpacity,
+  TouchableHighlight,
 } from 'react-native';
 import {useRoute} from '@react-navigation/native';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import {StripeProvider} from '@stripe/stripe-react-native';
+import RazorpayCheckout from 'react-native-razorpay';
+import CustomButton from './CustomButton';
 
 // const data = [
 //   {
@@ -47,15 +51,15 @@ export default function ReportItem() {
 
   const handlePress = item => {
     console.log('Item pressed:', item);
-    
   };
 
   const demo = () => {
-    ls = [{title: 'Symptoms', data: item.symptoms},
-    {title: 'comments', data: [item.comments]}
-   ];
-    console.log("ddd: ",ls)
-    setData(ls)
+    ls = [
+      {title: 'Symptoms', data: item.symptoms},
+      {title: 'comments', data: [item.comments]},
+    ];
+    console.log('ddd: ', ls);
+    setData(ls);
   };
   useEffect(() => {
     demo();
@@ -71,6 +75,36 @@ export default function ReportItem() {
         </TouchableOpacity>
       </SafeAreaView>
     );
+  };
+
+  const payNow = async () => {
+    const email = 'rajhmourya@gmail.com';
+    const name = 'Raj Harindar Mourya';
+    const mobile = '8299263986';
+    var options = {
+      description: 'Credits towards consultation',
+      image: 'https://i.imgur.com/3g7nmJC.jpg',
+      currency: 'INR',
+      key: 'rzp_test_A4j1ssVWbDOmcE',
+      amount: 100 * 13000,
+      name: 'CodeVibe',
+      order_id: '', //Replace this with an order_id created using Orders API.
+      prefill: {
+        email: email,
+        contact: mobile,
+        name: name,
+      },
+      theme: {color: '#EC9912'},
+    };
+    RazorpayCheckout.open(options)
+      .then(data => {
+        // handle success
+        console.log('success: ', data);
+      })
+      .catch(error => {
+        // handle failure
+        console.log('failure: ', error);
+      });
   };
 
   const RenderHPName = () => {
@@ -97,6 +131,15 @@ export default function ReportItem() {
           </View>
         )}
       />
+      {/* <TouchableOpacity
+        style={styles.ehrItemContainer}
+        onPress={() => payNow()}>
+        <Text >payNow</Text>
+      </TouchableOpacity> */}
+
+      <CustomButton text="Pay Now" onPress={() => payNow()}>
+        Login
+      </CustomButton>
     </View>
   );
 }
