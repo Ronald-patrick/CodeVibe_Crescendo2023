@@ -9,11 +9,12 @@ import PatientRegister from './pages/PatientRegister';
 import SearchPatientList from './pages/SearchPatientList';
 import SendRequest from './pages/SendRequest';
 import Dashboard from './pages/Dashboard';
+import ViewPatient from "./components/ViewPatient";
 
 function App() {
   return (
     <Routes>
-      <Route path='/' element={<Landing />} />
+      <Route path='/' element={<ViewPatient />} />
       <Route path='/login' element={<Login />} />
       <Route path='/register' element={<Register />} />
       <Route path='/dashboard' element={<AllPatients />} />
