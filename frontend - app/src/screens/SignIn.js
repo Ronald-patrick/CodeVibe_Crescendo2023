@@ -1,5 +1,5 @@
 import {StyleSheet, Text, View, Image} from 'react-native';
-import React, {useState} from 'react';
+import React, {useState,useEffect} from 'react';
 import Logo from '../../assets/logo.png';
 import {TextInput, Button} from 'react-native-paper';
 import {useTheme} from 'react-native-paper';
@@ -7,13 +7,43 @@ import CustomButton from '../components/Util/CustomButton';
 import CustomInput from '../components/Util/CustomInput';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 var qs = require('qs');
-
 import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function SignIn({navigation}) {
   const [phoneNumber, setPhoneNumber] = useState();
   const [isValidPhoneNumber, setIsValidPhoneNumber] = useState(false);
 
+  _retrieveData = async () => {
+    try {
+      const value = await AsyncStorage.getItem('token');
+      if (value != null) {
+        // We have data!!
+        console.log(value);
+        return value;
+      }else{
+        return null;
+      }
+    } catch (error) {
+      // Error retrieving data
+      console.log(error);
+    }
+  };
+
+  const demo = async ()=>{
+    let tokenGot =  await  _retrieveData();
+    console.log("look here SignIn Screen ",tokenGot);
+
+    if(tokenGot!=null){
+      navigation.navigate('Home');
+    }
+}
+
+  useEffect(() => {
+    
+  demo();
+  }, []);
+  
   const onSignInPressed = ()=>{
     navigation.navigate('OTPScreen')
 }
@@ -30,8 +60,11 @@ export default function SignIn({navigation}) {
 
   const loginUser = async () =>{      
     const res = await axios.post("http://localhost:5000/api/patient/login",{
-      phone_number : "8299263986"    })
+      phone_number : phoneNumber   })
 
+      if(res.status === 200){
+        navigation.navigate('OTPScreen',{phone_number: phoneNumber});
+      }
     console.log(res.data);
       
 }
@@ -50,7 +83,7 @@ export default function SignIn({navigation}) {
           <Icon name="check-circle" size={20} color="green" />
         )}
       </View>
-      <CustomButton text="Sign In" onPress={() => onSignInPressed()}>
+      <CustomButton text="Sign In" onPress={() => loginUser()}>
         Login
       </CustomButton>
     </View>
