@@ -3,6 +3,7 @@ import os
 import numpy as np
 import cv2
 from matplotlib import pyplot as plt
+import pandas as pd
 
 
 app = Flask(__name__)
@@ -162,6 +163,76 @@ def edgeDetection():
 
 
         # cv2.waitKey(0)
+
+import matplotlib.image as mpimg
+
+@app.route('/visualize',methods=['get'])
+def visualFitBit():
+    data = pd.read_csv("fitbitdata.csv")
+ 
+    # Scatter plot with day against tip
+    day=[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29]
+    plt.subplot(2, 1, 1)
+    plt.plot(day, data['BreathingRate'],marker='o')
+    
+    # Adding Title to the Plot
+    plt.title("Scatter Plot")
+    
+    # Setting the X and Y labels
+    plt.xlabel('Day')
+    plt.ylabel('BreathingRate')
+
+
+
+    plt.subplot(2, 1, 2)
+    plt.plot(day, data['Temperature'],marker='o')
+    
+    # Adding Title to the Plot
+    plt.title("Scatter Plot")
+    
+    # Setting the X and Y labels
+    plt.xlabel('Day')
+    plt.ylabel('Temperature')
+
+
+    plt.subplot(2, 2, 1)
+    plt.plot(day, data['Spo2'],marker='o')
+    
+    # Adding Title to the Plot
+    plt.title("Scatter Plot")
+    
+    # Setting the X and Y labels
+    plt.xlabel('Day')
+    plt.ylabel('Spo2')
+    
+
+
+    plt.subplot(2, 2, 2)
+    plt.plot(day, data['Vo2'],marker='o')
+    
+    # Adding Title to the Plot
+    plt.title("Scatter Plot")
+    
+    # Setting the X and Y labels
+    plt.xlabel('Day')
+    plt.ylabel('Vo2')
+
+    fname2 =  'codeVibe'+str(random_with_N_digits(4))+'.jpg'
+    # plt.show()
+
+    plt.savefig(fname2, dpi=72)
+    img = mpimg.imread(fname2)
+    # plt.imshow(img)
+    # plt.show()
+    fname3 =  'codeVibe'+str(random_with_N_digits(4))+'.jpg'
+
+    cv2.imwrite(fname3, img)
+    image_bytes = cv2.imencode('.jpg', img)[1].tobytes()
+    i = BytesIO(image_bytes)
+    # img2 =  cv2.imread(fname3)
+
+    return upload(i,fname3)
+    # plt.show()
 
 # @app.route('/upload',methods=['post'])
 def upload(img,filename):
