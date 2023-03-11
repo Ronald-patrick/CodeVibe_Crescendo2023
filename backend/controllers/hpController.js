@@ -13,7 +13,7 @@ const {
 
 router.route("/register").post(register)
 router.route("/login").post(login)
-router.route("/add-patient").post(addPatient)
+router.route("/add-patient").post(Auth,addPatient)
 
 module.exports = router;
 
