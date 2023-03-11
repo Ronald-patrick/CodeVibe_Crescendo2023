@@ -69,3 +69,35 @@ exports.getReports = async (req, res) => {
         return res.status(500).send("Something went wrong");
     }
 }
+
+exports.getAllRequest = async (req,res) => {
+    const user = req.user;
+    try {
+        const allRequest = await Patient.findOne({
+            "_id" : user.userId
+        })
+
+        return res.status(200).send({requests : allRequest.requests_list})
+    } catch (error) {
+        return res.status(500).send("Something went wrong")    
+    }
+}
+
+exports.verifyRequest = async (req,res) => {
+    const user = req.user;
+    const isValid = req.body.isVerified;
+    const hpid = req.body.id;
+    console.log(user);
+    console.log(hpid);
+    try {
+        if(isValid) {
+            const addId = await Patient.updateOne({ "_id": user.userId }, { $push: { "access_list": hpid } })
+        }
+        else{
+            const removeId = await Patient.updateOne({ "_id": user.userId }, { $pull: { "requests_list": hpid } })
+        }
+        return res.status(200).send({message : "Request Handled"})
+    } catch (error) {
+        return res.status(500).send("Something went wrong")
+    }
+}
