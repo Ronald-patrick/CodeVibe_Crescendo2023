@@ -120,9 +120,6 @@ exports.addReport = async (req, res) => {
 			console.log(err);
 		}
 
-
-
-
 		res.status(200).send({ message: "Report Added" })
 	}
 
@@ -130,4 +127,16 @@ exports.addReport = async (req, res) => {
 		console.log(err.message)
 		res.status(500).send({ error: "Cannot add Patient" })
 	}
+}
+
+exports.addRequest = async (req,res) =>{
+    const user = req.user;
+	const pid = req.body.id;
+    try {
+		console.log(pid);
+        const rel = await Patient.updateOne({ "_id": pid }, { $push: { "requests_list": user.id } })
+		res.status(200).send({ message: "Added request" })
+    } catch (error) {
+        res.status(500).send({ error: "Cannot add Request" })
+    }
 }
