@@ -6,7 +6,7 @@ function openClick() {
 function ViewPatient() {
   return (
     <>
-    
+      {/* <div className="container mx-auto"></div> */}
       <div class='grid grid-cols-2 gap-x-20'>
         <div>
           <div className='flex justify-between'>

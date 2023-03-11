@@ -1,18 +1,23 @@
 import React, { useState } from 'react'
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import PatientsRegister from './PatientRegister';
 import SearchPatientList from './SearchPatientList';
+import PatientProfile from './PatientDets/PatientProfile';
 
-const Dashboard = () => {
 
-    const [activeLink, setActiveLink] = useState('addpatients');
+const Dashboard_One = () => {
+
+    const [activeLink, setActiveLink] = useState('PatientProfile');
 
     const handleLinkClick = (linkName) => {
         setActiveLink(linkName);
     };
 
     let activeComponent;
-    if (activeLink === 'addpatients') {
+    if (activeLink === 'PatientProfile') {
+        activeComponent = <PatientProfile />;
+    }
+    else if (activeLink === 'addpatients') {
         activeComponent = <PatientsRegister />;
     } else if (activeLink === 'listPatients') {
         activeComponent = <SearchPatientList />;
@@ -101,7 +106,7 @@ const Dashboard = () => {
                 </div>
             </aside>
 
-            <main class="ml-60 pt-16 max-h-screen overflow-hidden">
+            <main class="ml-60 pt-16 max-h-screen">
                 <div class="px-6 py-8">
 
                     {activeComponent}
@@ -113,4 +118,4 @@ const Dashboard = () => {
     )
 }
 
-export default Dashboard
+export default Dashboard_One
