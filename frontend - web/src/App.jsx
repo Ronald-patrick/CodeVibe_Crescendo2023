@@ -3,6 +3,9 @@ import { Routes, Route } from "react-router-dom";
 import Landing from './pages/Landing';
 import Login from './pages/Auth/Login';
 import Register from './pages/Auth/Register';
+import PatientRegister from './pages/PatientRegister';
+import SearchPatientList from './pages/SearchPatientList';
+import SendRequest from './pages/SendRequest';
 
 function App() {
   return (
@@ -10,6 +13,11 @@ function App() {
     <Route path='/' element={<Landing />} />
     <Route path='/login' element={<Login />} />
     <Route path='/register' element={<Register />} />
+    <Route path='/patientRegister' element={<PatientRegister />} />
+    <Route path = "/listPatients" element={<SearchPatientList/>} />
+    <Route path = "/sendReq" element={<SendRequest/>} />
+    
+
   </Routes>
   )
 }
