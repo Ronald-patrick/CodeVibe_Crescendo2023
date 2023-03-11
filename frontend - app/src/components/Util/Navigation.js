@@ -6,6 +6,8 @@ import SignIn from '../../screens/SignIn';
 import OTPScreen from '../../screens/OTPScreen';
 import Reports from './Reports';
 import ReportItem from './ReportItem';
+import RequestsScreen from './RequestsScreen';
+import RequestsItem from './RequestsItem';
 
 const Stack = createNativeStackNavigator();
 const Navigation = () => {
@@ -18,6 +20,10 @@ const Navigation = () => {
             <Stack.Screen name="OTPScreen" component={OTPScreen}></Stack.Screen>
             <Stack.Screen name="Reports" component={Reports}></Stack.Screen>
             <Stack.Screen name="ReportItem" component={ReportItem}></Stack.Screen>
+            <Stack.Screen name="RequestsScreen" component={RequestsScreen}></Stack.Screen>
+            <Stack.Screen name="RequestsItem" component={RequestsItem}></Stack.Screen>
+
+
         </Stack.Navigator>
     </NavigationContainer>
   );

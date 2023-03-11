@@ -11,12 +11,12 @@ const data = [
   {id: '5', PH1Name: 'Item 1', PHPhone: 'Phone 1', PH2Name: 'Item 2'},
 ];
 
-const renderItem = ({item}) => (
+const renderItem = ({item,setData}) => (
   //   <View style={styles.item}>
   //     <Text>{item.title}</Text>
   //   </View>
   <View>
-    <RequestsItem item={item} />
+    <RequestsItem item={item} setData={setData}/>
   </View>
 );
 
@@ -34,8 +34,13 @@ _retrieveData = async () => {
   }
 };
 
-export default function RequestsScreen() {
+export default function RequestsScreen({navigation}) {
   const [data, setData] = useState([]);
+
+  const refreshData = async()=>{
+    setData([]);
+    demo();
+  }
 
   const demo = async () => {
     let tokenGot = await _retrieveData();
@@ -55,7 +60,7 @@ export default function RequestsScreen() {
     let ls = res.data.requests;
     let d = [];
     for (let i = 0; i < ls.length; i++) {
-      d.push({id:i+1, name: ls[i].name,address: ls[i].address,phone_number: ls[i].phone_number});
+      d.push({id:ls[i].id, name: ls[i].name,address: ls[i].address,phone_number: ls[i].phone_number});
     }
     console.log('d: ', d);
     setData(ls);
@@ -67,7 +72,7 @@ export default function RequestsScreen() {
     <View style={styles.container}>
       <FlatList
         data={data}
-        renderItem={renderItem}
+        renderItem={({item}) => <RequestsItem item={item} refreshData={refreshData}/>}
         keyExtractor={item => item.id}
       />
     </View>
