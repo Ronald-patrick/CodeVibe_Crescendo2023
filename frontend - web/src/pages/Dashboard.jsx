@@ -58,7 +58,7 @@ const Dashboard = () => {
                 <div class="flex flex-col justify-between h-full">
                     <div class="flex-grow">
                         <div class="px-4 py-6 text-center border-b">
-                            <h1 class="text-xl font-bold leading-none"><span class="text-primary">CodeVibe</span> MediCare</h1>
+                            <h1 class="text-xl font-bold leading-none"><span class="text-primary flex justify-center items-center"> <img className='w-[40px] mr-2' src="./logo.png" alt="Logo" /> MediVault</span> </h1>
                         </div>
                         <div class="p-4">
                             <ul class="space-y-1">

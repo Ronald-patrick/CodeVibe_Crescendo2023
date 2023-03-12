@@ -22,7 +22,12 @@ const patientSchema = new mongoose.Schema(
 				},
 				xrays_data : [String],
 				symptoms : [String],
-				comments : String
+				comments : String,
+				amount : String,
+				edgeDetection : String,
+				segmentation : String,
+				visualization : String,
+				bloodReport : String
 			}
 		]
 	},

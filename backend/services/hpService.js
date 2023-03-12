@@ -104,17 +104,21 @@ exports.addReport = async (req, res) => {
 	const pid = req.body.id;
 	try {
 		const report = {
-			reportBy : req.body.hpname,
-			xrays_data: req.body.xrayList,
+			reportBy : req.body.reportBy,
+			xrays_data: req.body.xrays_data,
 			symptoms: req.body.symptoms,
-			comments: req.body.comments
+			comments: req.body.comments,
+			edgeDetection : req.body.edgeDetection,
+			segmentation : req.body.segmentation,
+			visualization : req.body.visualization,
+			amount : req.body.amount,
+			bloodReport : req.body.bloodReport
 		}
 
 		console.log(report);
 
 		try {
-			const rel = Patient.updateOne({ "_id": pid },
-			{ $push: { "reports": report } }).then((arr)=> console.log(arr)).catch(err => console.log(err))
+			const rel = Patient.updateOne({ "_id": pid }, { $push: { "reports": report } }).then((arr)=> console.log(arr)).catch(err => console.log(err))
 		}
 
 		catch(err){
@@ -217,6 +221,6 @@ exports.uploadFiles = async(req,res)=>{
 		}
 
 	} catch (error) {
-		
+		res.status(500).send({error : "Something went Wrong"})
 	}
 }
