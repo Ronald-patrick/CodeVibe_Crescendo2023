@@ -6,7 +6,7 @@ const Footer = () => {
         <footer className='bg-primary py-3 text-[#ffffffc7]'>
             <div className='flex w-[100%] justify-center items-center text-[#ffffffc7] gap-2 text-[25px] font-semibold mb-4'>
                 <RocketLaunch style={{ width: 35, height: 35 }} />
-                CodeVibe
+                MediVault
             </div>
             <hr class="h-px my-8 bg-[#ffffff8a] border-0 "/>
 
