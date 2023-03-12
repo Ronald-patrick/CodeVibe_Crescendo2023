@@ -4,9 +4,12 @@ import numpy as np
 import cv2
 from matplotlib import pyplot as plt
 import pandas as pd
+from flask_cors import CORS, cross_origin
 
 
 app = Flask(__name__)
+cors = CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
 
 
 
@@ -68,6 +71,7 @@ from io import BytesIO
 
 
 @app.route('/segment',methods=['post'])
+@cross_origin()
 def segment():
     if request.method == 'POST':
         file = request.files['file']
@@ -167,6 +171,7 @@ def edgeDetection():
 import matplotlib.image as mpimg
 
 @app.route('/visualize',methods=['get'])
+@cross_origin()
 def visualFitBit():
     data = pd.read_csv("fitbitdata.csv")
  
@@ -249,3 +254,6 @@ def upload(img,filename):
             msg = "Upload Done ! "
 
     return 'https://codevibecressendo2k23.s3.ap-south-1.amazonaws.com/'+filename
+
+if __name__ == '__main__':
+    app.run(debug=True, port=8000)

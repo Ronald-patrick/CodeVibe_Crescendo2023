@@ -3,6 +3,7 @@ const { HealthProvider } = require('../models/healthProvider')
 const { Patient } = require('../models/patient')
 const bcrypt = require('bcryptjs')
 const { uploadFile } = require("../config/s3");
+const { v4: uuidv4 } = require('uuid');
 
 exports.register = async (req, res) => {
 	console.log(req.body)
@@ -103,17 +104,21 @@ exports.addReport = async (req, res) => {
 	const pid = req.body.id;
 	try {
 		const report = {
-			reportBy : req.body.hpname,
-			xrays_data: req.body.xrayList,
+			reportBy : req.body.reportBy,
+			xrays_data: req.body.xrays_data,
 			symptoms: req.body.symptoms,
-			comments: req.body.comments
+			comments: req.body.comments,
+			edgeDetection : req.body.edgeDetection,
+			segmentation : req.body.segmentation,
+			visualization : req.body.visualization,
+			amount : req.body.amount,
+			bloodReport : req.body.bloodReport
 		}
 
 		console.log(report);
 
 		try {
-			const rel = Patient.updateOne({ "_id": pid },
-			{ $push: { "reports": report } }).then((arr)=> console.log(arr)).catch(err => console.log(err))
+			const rel = Patient.updateOne({ "_id": pid }, { $push: { "reports": report } }).then((arr)=> console.log(arr)).catch(err => console.log(err))
 		}
 
 		catch(err){
@@ -139,4 +144,83 @@ exports.addRequest = async (req,res) =>{
     } catch (error) {
         res.status(500).send({ error: "Cannot add Request" })
     }
+}
+
+exports.getHpData = async(req,res) =>{
+	const user = req.user;
+	try {
+		const provider = await HealthProvider.findOne({
+			"_id" : user.id
+		})
+
+		console.log(provider);
+		res.status(200).send({ provider })
+	} catch (error) {
+		res.status(500).send({error : "Cannot Get Data"})
+	}	
+}
+
+exports.getPatients = async(req,res) =>{
+	const user = req.user;
+	try {
+		const provider = await HealthProvider.findOne({
+			"_id" : user.id
+		})
+
+		let arr = []
+		
+        let results = await Promise.all(provider.patients_list.map(async (p) => {
+            let id = p.toHexString();
+            const hp = await Patient.findOne({
+                "_id": id
+            })
+            arr.push(hp)
+
+            return p;
+        }));
+
+		res.status(200).send(arr)
+
+	} catch (error) {
+		res.status(500).send({error : "Cannot Get Data"})
+	}
+}
+
+exports.uploadFiles = async(req,res)=>{
+	try {
+		if (req.files) {
+			let xrayLink = ''
+			let breportLink = ''
+			let xray = req.files.xray;
+			let filename = xray.name;
+
+			const result = await uploadFile(
+				req.files.xray.data,
+				`${process.env.AWS_BUCKET_NAME}/${uuidv4()}`,
+				filename
+			);
+
+			xrayLink = result.Location;
+
+			let breport = req.files.bloodReport;
+			filename = breport.name;
+
+			const result2 = await uploadFile(
+				req.files.bloodReport.data,
+				`${process.env.AWS_BUCKET_NAME}/${uuidv4()}`,
+				filename
+			)
+
+			breportLink = result2.Location;
+
+			res.status(200).send({
+				xrayLink,
+				breportLink
+			})
+
+		}
+
+	} catch (error) {
+		res.status(500).send({error : "Something went Wrong"})
+	}
 }
