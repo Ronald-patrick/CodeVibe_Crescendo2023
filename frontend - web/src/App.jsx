@@ -13,6 +13,9 @@ import ViewPatient from './components/ViewPatient'
 import Landing from './pages/Landing'
 import PatientProfile from "./pages/PatientDets/PatientProfile";
 import Dashboard_One from "./pages/Dashboard_One";
+import PatientDetailsCard from "./pages/PatientDetailsCard";
+import ReportDetail from "./pages/ReportDetail";
+import AddReport from "./pages/AddReport";
 
 function App() {
 
@@ -24,12 +27,15 @@ function App() {
       <Route path='/registerhp' element={<RegisterHP />} />
       <Route path='/reportlist' element={<ReportList />} />
       <Route path="/Dashboard" element={<Dashboard />} />
-      <Route path='patientRegister' element={<PatientRegister />} />
-      <Route path="listPatients" element={<SearchPatientList />} />
-      <Route  path='/view' element={<ViewPatient />} />
+      <Route path="/patientDetails" element={<PatientDetailsCard />} />
+      <Route path='/patientRegister' element={<PatientRegister />} />
+      <Route path="/listPatients" element={<SearchPatientList />} />
+      <Route path='/view' element={<ViewPatient />} />
       <Route path="/sendReq" element={<SendRequest />} />
-      <Route path = '/patientProfile' element={<PatientProfile />} />
-      <Route path = '/patientProfile_1' element={<Dashboard_One />} />
+      <Route path ='/patientProfile' element={<PatientProfile />} />
+      <Route path ='/patientProfile_1' element={<Dashboard_One />} />
+      <Route path ='/reportDetail' element={<ReportDetail />} />
+      <Route path ='/add-report' element={<AddReport />} />
     </Routes>
   );
 }

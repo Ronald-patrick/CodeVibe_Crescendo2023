@@ -1,10 +1,39 @@
 import React, { useState } from "react";
-const [name, setName] = useState("");
-const [email, setEmail] = useState("");
-const [phone, setPhone] = useState("");
-const [aadhar, setAadhar] = useState("");
-const [address, setAddress] = useState("");
+import { Button, TextField } from "@mui/material";
+import axios from "axios"
+
 export default function PatientDetails() {
+
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [aadhar, setAadhar] = useState("");
+  const [address, setAddress] = useState("");
+
+  const addPatient = async (e)=>{
+    e.preventDefault()
+    const config = {
+      headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+    };
+
+    const res = await axios.post("http://localhost:5000/api/provider/add-patient",{
+      name,
+      email,
+      address,
+      phone_number:phone,
+      aadhar
+    },config)
+
+    console.log(res);
+
+    if(res.status === 200){
+      alert("Patient Added")
+    }
+    else{
+      alert("Register Error")
+    }
+  }
+
   return (
     <>
       {/* <div className="hidden sm:block" aria-hidden="true">
@@ -24,7 +53,7 @@ export default function PatientDetails() {
                             </div>
                         </div> */}
           <div className='mt-5 md:col-span-2 md:mt-0 border-2 border-violet-200'>
-            <form action='#' method='POST'>
+            <form method='POST'>
               <div className='overflow-hidden shadow sm:rounded-md'>
                 <div className='bg-white px-4 py-5 sm:p-6'>
                   <div className='grid grid-cols-6 gap-6'>
@@ -41,6 +70,10 @@ export default function PatientDetails() {
                         id='name'
                         autoComplete='given-name'
                         className='mt-2 px-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-indigo-100 sm:text-sm sm:leading-6'
+                        value={name}
+                        onChange={(e)=>{
+                          setName(e.target.value)
+                        }}
                       />
                     </div>
 
@@ -57,9 +90,12 @@ export default function PatientDetails() {
                         id='email-address'
                         autoComplete='email'
                         className='mt-2 px-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-indigo-100 sm:text-sm sm:leading-6'
+                        value={email}
+                        onChange={(e)=>{
+                          setEmail(e.target.value)
+                        }}
                       />
                     </div>
-
                     {/* <div className="col-span-6 sm:col-span-3">
                                                 <label htmlFor="country" className="block text-sm font-medium leading-6 text-gray-900">
                                                     Country
@@ -81,7 +117,7 @@ export default function PatientDetails() {
                         htmlFor='street-address'
                         className='block text-sm font-medium leading-6 text-gray-900'
                       >
-                        Street address
+                        Address
                       </label>
                       <input
                         type='text'
@@ -89,8 +125,13 @@ export default function PatientDetails() {
                         id='street-address'
                         autoComplete='street-address'
                         className='mt-2 px-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-indigo-100 sm:text-sm sm:leading-6'
+                        value={address}
+                        onChange={(e)=>{
+                          setAddress(e.target.value)
+                        }}
                       />
                     </div>
+                    
 
                     <div className='col-span-6 sm:col-span-6 lg:col-span-2'>
                       <label
@@ -105,6 +146,10 @@ export default function PatientDetails() {
                         id='uuid'
                         autoComplete='aadhaar'
                         className='px-2 mt-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-indigo-100 sm:text-sm sm:leading-6'
+                        value={aadhar}
+                        onChange={(e)=>{
+                          setAadhar(e.target.value)
+                        }}
                       />
                     </div>
 
@@ -121,6 +166,10 @@ export default function PatientDetails() {
                         id='phone'
                         autoComplete='phone'
                         className='mt-2 px-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-indigo-100 sm:text-sm sm:leading-6'
+                        value={phone}
+                        onChange={(e)=>{
+                          setPhone(e.target.value)
+                        }}
                       />
                     </div>
 
@@ -146,12 +195,14 @@ export default function PatientDetails() {
                   </div>
                 </div>
                 <div className='bg-gray-50 px-4 py-3 text-right sm:px-6'>
-                  <button
+                  <Button
                     type='submit'
+                    variant="contained"
+                    onClick={addPatient}
                     className='inline-flex justify-center rounded-md bg-indigo-600 py-2 px-3 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500'
                   >
                     Save
-                  </button>
+                  </Button>
                 </div>
               </div>
             </form>
