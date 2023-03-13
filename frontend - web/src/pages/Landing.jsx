@@ -11,7 +11,7 @@ const Landing = () => {
         <div className='flex justify-center items-center max-w-[1400px] mt-6 mx-auto h-[45vh]'>
           <div className='flex flex-col justify-center items-start p-4  h-[100%]'>
             <h1 className='text-primary text-[60px] font-bold'>We've got you covered</h1>
-            <p className='text-primary text-xl w-[60%] my-4'>MediVault is a modern, developer-friendly health insurance verification platform used by leading organizations from across the healthcare ecosystem.</p>
+            <p className='text-primary text-xl w-[60%] my-4'>MediVault is a modern, electronic health record platform used by leading organizations from across the healthcare ecosystem.</p>
             {/* <button className='w-[140px] bg-primary text-white h-[40px] mt-4  text-lg'></button> */}
             <Button variant='contained'>Get Connected</Button>
           </div>
