@@ -3,6 +3,7 @@ const { HealthProvider } = require('../models/healthProvider')
 const { Patient } = require('../models/patient')
 const bcrypt = require('bcryptjs')
 const { uploadFile } = require("../config/s3");
+const { v4: uuidv4 } = require('uuid');
 
 exports.register = async (req, res) => {
 	console.log(req.body)
@@ -14,9 +15,10 @@ exports.register = async (req, res) => {
 			password: newPassword,
 			address: req.body.address,
 			phone_number: req.body.phone_number,
-			services: req.body.services
+			services: req.body.services,
+			patients_list: req.body.patients_list
 		})
-		res.status(200).send({message : 'Registered Successfully'})
+		res.status(200).send({ message: 'Registered Successfully' })
 	} catch (err) {
 		console.log(err.message)
 		res.status(500).send({ status: 'error', error: 'Duplicate email' })
@@ -64,7 +66,7 @@ exports.login = async (req, res) => {
 			process.env.JWT_SECRET, { expiresIn: "24h" }
 		)
 
-		res.status(200).send({message : 'Registered Successfully',token})
+		res.status(200).send({ message: 'Registered Successfully', token })
 	} else {
 		return res.status(500).send({ status: 'error' })
 	}
@@ -79,14 +81,146 @@ exports.addPatient = async (req, res) => {
 			address: req.body.address,
 			phone_number: req.body.phone_number,
 			access_list: [user.id],
-			requests_list:[],
-			reports:[]
+			requests_list: [],
+			reports: []
 		})
 
-		res.status(200).send({message : 'Patient Added Successfully'})
+		const getinsertedPatient = await Patient.findOne({
+			phone_number: req.body.phone_number
+		})
+
+		const rel = await HealthProvider.updateOne({ "_id": user.id }, { $push: { "patients_list": getinsertedPatient._id } });
+
+		res.status(200).send({ message: 'Patient Added Successfully' })
 
 	} catch (err) {
 		console.log(err.message)
-		res.status(500).send({error : "Cannot add Patient"})
+		res.status(500).send({ error: "Cannot add Patient" })
+	}
+}
+
+exports.addReport = async (req, res) => {
+	const user = req.user;
+	const pid = req.body.id;
+	try {
+		const report = {
+			reportBy : req.body.reportBy,
+			xrays_data: req.body.xrays_data,
+			symptoms: req.body.symptoms,
+			comments: req.body.comments,
+			edgeDetection : req.body.edgeDetection,
+			segmentation : req.body.segmentation,
+			visualization : req.body.visualization,
+			amount : req.body.amount,
+			bloodReport : req.body.bloodReport
+		}
+
+		console.log(report);
+
+		try {
+			const rel = Patient.updateOne({ "_id": pid }, { $push: { "reports": report } }).then((arr)=> console.log(arr)).catch(err => console.log(err))
+		}
+
+		catch(err){
+			console.log(err);
+		}
+
+		res.status(200).send({ message: "Report Added" })
+	}
+
+	catch (err) {
+		console.log(err.message)
+		res.status(500).send({ error: "Cannot add Patient" })
+	}
+}
+
+exports.addRequest = async (req,res) =>{
+    const user = req.user;
+	const pid = req.body.id;
+    try {
+		console.log(pid);
+        const rel = await Patient.updateOne({ "_id": pid }, { $push: { "requests_list": user.id } })
+		res.status(200).send({ message: "Added request" })
+    } catch (error) {
+        res.status(500).send({ error: "Cannot add Request" })
+    }
+}
+
+exports.getHpData = async(req,res) =>{
+	const user = req.user;
+	try {
+		const provider = await HealthProvider.findOne({
+			"_id" : user.id
+		})
+
+		console.log(provider);
+		res.status(200).send({ provider })
+	} catch (error) {
+		res.status(500).send({error : "Cannot Get Data"})
+	}	
+}
+
+exports.getPatients = async(req,res) =>{
+	const user = req.user;
+	try {
+		const provider = await HealthProvider.findOne({
+			"_id" : user.id
+		})
+
+		let arr = []
+		
+        let results = await Promise.all(provider.patients_list.map(async (p) => {
+            let id = p.toHexString();
+            const hp = await Patient.findOne({
+                "_id": id
+            })
+            arr.push(hp)
+
+            return p;
+        }));
+
+		res.status(200).send(arr)
+
+	} catch (error) {
+		res.status(500).send({error : "Cannot Get Data"})
+	}
+}
+
+exports.uploadFiles = async(req,res)=>{
+	try {
+		if (req.files) {
+			let xrayLink = ''
+			let breportLink = ''
+			let xray = req.files.xray;
+			let filename = xray.name;
+
+			const result = await uploadFile(
+				req.files.xray.data,
+				`${process.env.AWS_BUCKET_NAME}/${uuidv4()}`,
+				filename
+			);
+
+			xrayLink = result.Location;
+
+			let breport = req.files.bloodReport;
+			filename = breport.name;
+
+			const result2 = await uploadFile(
+				req.files.bloodReport.data,
+				`${process.env.AWS_BUCKET_NAME}/${uuidv4()}`,
+				filename
+			)
+
+			breportLink = result2.Location;
+
+			res.status(200).send({
+				xrayLink,
+				breportLink
+			})
+
+		}
+
+	} catch (error) {
+		res.status(500).send({error : "Something went Wrong"})
 	}
 }
