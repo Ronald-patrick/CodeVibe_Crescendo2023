@@ -129,6 +129,7 @@ exports.verifyRequest = async (req, res) => {
         if (isValid) {
             const addId = await Patient.updateOne({ "_id": user.userId }, { $push: { "access_list": hpid } })
             const removeId = await Patient.updateOne({ "_id": user.userId }, { $pull: { "requests_list": hpid } })
+            const addPatient = await HealthProvider.updateOne({"_id" : hpid}, { $push: { "patients_list": user.userId } })
         }
         else {
             const removeId = await Patient.updateOne({ "_id": user.userId }, { $pull: { "requests_list": hpid } })

@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import PatientsRegister from './PatientRegister';
 import SearchPatientList from './SearchPatientList';
 import SendRequest from './SendRequest';
+import Symptoms from './Symptoms';
 
 const Dashboard = () => {
 
@@ -21,6 +22,9 @@ const Dashboard = () => {
     }
     else if (activeLink === 'requests') {
         activeComponent = <SendRequest />;
+    }
+    else if (activeLink === 'predictD') {
+        activeComponent = <Symptoms />;
     }
 
 
@@ -88,6 +92,12 @@ const Dashboard = () => {
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="text-lg mr-4" viewBox="0 0 16 16">
                                             <path d="M2 1a1 1 0 0 0-1 1v4.586a1 1 0 0 0 .293.707l7 7a1 1 0 0 0 1.414 0l4.586-4.586a1 1 0 0 0 0-1.414l-7-7A1 1 0 0 0 6.586 1H2zm4 3.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z" />
                                         </svg>Add Request
+                                    </p>
+                                </li>
+
+                                <li className={activeLink === 'predictD' ? 'bg-gray-300 text-primary rounded-xl' : ''} onClick={() => handleLinkClick('predictD')}>
+                                    <p class="flex bg-white hover:bg-gray-300 rounded-xl font-bold text-sm text-gray-900 py-3 px-4">
+                                        Predict Disease
                                     </p>
                                 </li>
                             </ul>
