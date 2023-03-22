@@ -1,7 +1,7 @@
 import React from 'react'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
-import { Button } from '@mui/material'
+import Button from '@mui/material/Button'
 
 const Landing = () => {
   return (

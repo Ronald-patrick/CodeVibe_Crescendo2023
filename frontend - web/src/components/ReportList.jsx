@@ -1,7 +1,7 @@
-import { Button } from "@mui/material";
-import React, { Component } from "react";
+import Button from "@mui/material/Button";
+import React from "react";
 // import pdf from "../assets/MeetResume.pdf"
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 function openClick() {
   window.open("https://www.africau.edu/images/default/sample.pdf")

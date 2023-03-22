@@ -1,5 +1,5 @@
 import React from 'react'
-import { RocketLaunch } from '@mui/icons-material'
+import RocketLaunch from '@mui/icons-material/RocketLaunch'
 
 const Footer = () => {
     return (

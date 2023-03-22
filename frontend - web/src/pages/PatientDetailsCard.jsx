@@ -1,6 +1,6 @@
 import React from 'react'
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Button } from "@mui/material";
+import Button from "@mui/material/Button";
 import ViewPatient from '../components/ViewPatient';
 import ReportList from '../components/ReportList';
 import NavBasic from '../components/NavBasic';

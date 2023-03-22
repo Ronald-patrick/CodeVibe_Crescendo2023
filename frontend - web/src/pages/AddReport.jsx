@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import NavBasic from '../components/NavBasic'
-import { useLocation, useNavigate } from 'react-router-dom';
-import { Button } from '@mui/material';
+import { useLocation } from 'react-router-dom';
+import Button from "@mui/material/Button";
 import axios from "axios"
 
 const AddReport = () => {
